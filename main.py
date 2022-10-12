@@ -7,7 +7,10 @@ from pytube.cli import on_progress
 
 def download_playlist_videos(play_list_url, folder):
     playlist = Playlist(play_list_url)
-    os.mkdir(folder)
+    try:
+        os.mkdir(folder)
+    except:
+        pass
     i = 1
     for url in playlist:
         try:
@@ -23,7 +26,11 @@ def download_playlist_videos(play_list_url, folder):
 
 def convert_videos_to_mp3(video_folder, audio_folder):
     files = os.listdir(video_folder)
-    os.mkdir(audio_folder)
+    try:
+        os.mkdir(audio_folder)
+    except:
+        pass
+
     i = 1
     for filename in files:
         if filename.endswith(".mp4"):
@@ -46,8 +53,8 @@ def convert_videos_to_mp3(video_folder, audio_folder):
 def main():
     videos_folder = "./download/videos"
     audios_folder = "./download/audio"
-    download_playlist_videos(
-        "https://www.youtube.com/playlist?list=PLrvKqne9ixu3bBt_z1gPIei11KaWRcGwU", videos_folder)
+    playlist_url = "https://www.youtube.com/playlist?list=PLrvKqne9ixu1FZTt6afGX3Q8-s0ol1fLs"
+    download_playlist_videos(playlist_url, videos_folder)
     convert_videos_to_mp3(videos_folder, audios_folder)
 
 
