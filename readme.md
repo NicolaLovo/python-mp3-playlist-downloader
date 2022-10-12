@@ -40,4 +40,5 @@ python3 main.py
 
 # Cartelle necessarie:
 
-- download
+- download/audio
+- download/videos
