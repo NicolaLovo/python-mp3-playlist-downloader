@@ -6,6 +6,14 @@ from pytube import Playlist, YouTube
 from pytube.cli import on_progress
 
 
+def parse_file_name(index, title):
+    name = f"{index}-{title}.mp4"
+    name = name.replace("|", "-").replace("/", "-").replace("\\", "-")
+    name = name.replace(":", "-").replace("*", "-").replace("?", "-")
+    name = name.strip()
+    return name
+
+
 def download_playlist_videos(play_list_url, folder):
     playlist = Playlist(play_list_url)
     i = 1
@@ -15,7 +23,8 @@ def download_playlist_videos(play_list_url, folder):
             video = yt.streams.filter(only_audio=True).first()
             print(
                 f"downloading {i}/{len(playlist)}, size {round(video.filesize/(1024*1024))}MB, inside {folder}, '{yt.title}'")
-            video.download(folder, filename=f"{i}-{yt.title}.mp4")
+            name = parse_file_name(i, yt.title)
+            video.download(folder, filename=name)
             i += 1
         except Exception as e:
             print(f"Error downloading '{url}': {e}")
@@ -29,7 +38,8 @@ def download_list_videos(videos_urls, folder):
             video = yt.streams.filter(only_audio=True).first()
             print(
                 f"downloading {i}/{len(videos_urls)}, size {round(video.filesize/(1024*1024))}MB, inside {folder}, '{yt.title}'")
-            video.download(folder, filename=f"{i}-{yt.title}.mp4")
+            name = parse_file_name(i, yt.title)
+            video.download(folder, filename=name)
             i += 1
         except Exception as e:
             print(f"Error downloading '{url}': {e}")
@@ -72,11 +82,13 @@ def main():
         pass
 
     # ! videos list
-    videos_list = ["https://www.youtube.com/watch?v=QnMuICr4UmM"]
+    videos_list = [
+        "https://youtu.be/5IWS7Y5KRhk?list=PLrvKqne9ixu2VC3MCxH6SsAABXQ-FzXi4"]
     download_list_videos(videos_list, videos_folder)
 
     # ! playlist
-    # playlist_url = "https://www.youtube.com/playlist?list=PLrvKqne9ixu1FZTt6afGX3Q8-s0ol1fLs"
+    # playlist_url = "https://www.youtube.com/playlist?list=PLrvKqne9ixu1FZTt6afGX3Q8-s0ol1fLs" # playlist totale
+    # playlist_url = "https://www.youtube.com/playlist?list=PLrvKqne9ixu2VC3MCxH6SsAABXQ-FzXi4"  # video nuovi
     # download_playlist_videos(playlist_url, videos_folder)
 
     # ! convert videos to mp3
