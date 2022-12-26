@@ -18,9 +18,12 @@ source .venv/bin/activate
 # Installare le librerie
 
 ```bash
-pip install pytube
-pip install moviepy
+pip install pytube moviepy pydub
 ```
+
+**è necessario installare ffmpeg**
+
+<https://pythonbasics.org/convert-mp3-to-wav/>
 
 ### Eseguire il codice
 
@@ -42,3 +45,4 @@ python3 main.py
 
 - download/audio
 - download/videos
+- download/wav
