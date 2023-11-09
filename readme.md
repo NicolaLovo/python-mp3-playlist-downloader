@@ -23,6 +23,13 @@ source .venv/bin/activate
 pip install pytube moviepy pydub
 ```
 
+Fix for pytube: https://github.com/pytube/pytube/issues/1678#issuecomment-1609241125
+Modificare il file .venv/Lib/site-packages/pytube/cypher.py a linea 264
+
+````python
+
+```python
+
 **è necessario installare ffmpeg**
 
 <https://pythonbasics.org/convert-mp3-to-wav/>
@@ -35,7 +42,7 @@ Windows
 
 ```bash
 python main.py
-```
+````
 
 Mac
 

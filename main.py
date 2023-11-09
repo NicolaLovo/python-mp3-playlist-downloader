@@ -21,7 +21,8 @@ def download_playlist_videos(play_list_url, folder):
     i = 1
     for url in playlist:
         try:
-            yt = YouTube(url, on_progress_callback=on_progress)
+            yt = YouTube(url, on_progress_callback=on_progress,
+                         use_oauth=True, allow_oauth_cache=True)
             video = yt.streams.filter(only_audio=True).first()
 
             name = parse_file_name(i, yt.title)
@@ -116,7 +117,8 @@ def main():
     # download_list_videos(videos_list, videos_folder)
 
     # ! playlist
-    # playlist_url = "https://www.youtube.com/playlist?list=PLrvKqne9ixu1FZTt6afGX3Q8-s0ol1fLs" # playlist totale
+    # playlist totale
+    # playlist_url = "https://www.youtube.com/playlist?list=PLrvKqne9ixu1FZTt6afGX3Q8-s0ol1fLs"
     playlist_url = "https://www.youtube.com/playlist?list=PLrvKqne9ixu2VC3MCxH6SsAABXQ-FzXi4"  # video nuovi
     download_playlist_videos(playlist_url, videos_folder)
 
