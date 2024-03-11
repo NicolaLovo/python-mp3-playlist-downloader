@@ -1,5 +1,8 @@
 # Inizializzare il progetto
 
+
+**Important: FFMPEG required**
+
 [fix permissions fow windows](https://stackoverflow.com/questions/4037939/powershell-says-execution-of-scripts-is-disabled-on-this-system)
 
 ```bash
@@ -21,6 +24,10 @@ source .venv/bin/activate
 
 ```bash
 pip install pytube moviepy pydub
+```
+
+```bash
+pip install -r requirements.txt
 ```
 
 Fix for pytube: https://github.com/pytube/pytube/issues/1678#issuecomment-1609241125
