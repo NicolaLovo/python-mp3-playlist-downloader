@@ -21,13 +21,18 @@ def download_playlist_videos(play_list_url, folder):
     i = 1
     for url in playlist:
         try:
-            yt = YouTube(url, on_progress_callback=on_progress,
-                         use_oauth=True, allow_oauth_cache=True)
+            yt = YouTube(
+                url,
+                on_progress_callback=on_progress,
+                use_oauth=True,
+                allow_oauth_cache=True,
+            )
             video = yt.streams.filter(only_audio=True).first()
 
             name = parse_file_name(i, yt.title)
             print(
-                f"downloading {i}/{len(playlist)}, size {round(video.filesize/(1024*1024))}MB, inside {folder}, '{name}'")
+                f"  ->downloading {i}/{len(playlist)}, size {round(video.filesize/(1024*1024))}MB, inside {folder}, '{name}'"
+            )
             video.download(folder, filename=name)
             i += 1
         except Exception as e:
@@ -41,7 +46,8 @@ def download_list_videos(videos_urls, folder):
             yt = YouTube(url, on_progress_callback=on_progress)
             video = yt.streams.filter(only_audio=True).first()
             print(
-                f"downloading {i}/{len(videos_urls)}, size {round(video.filesize/(1024*1024))}MB, inside {folder}, '{yt.title}'")
+                f"  ->downloading {i}/{len(videos_urls)}, size {round(video.filesize/(1024*1024))}MB, inside {folder}, '{yt.title}'"
+            )
             name = parse_file_name(i, yt.title)
             video.download(folder, filename=name)
             i += 1
@@ -53,13 +59,13 @@ def convert_videos_to_mp3(video_folder, audio_folder):
     files = os.listdir(video_folder)
 
     i = 1
+    print("Converting mp4 to mp3")
     for filename in files:
         if filename.endswith(".mp4"):
             try:
                 mp4_file = os.path.join(video_folder, filename)
-                mp3_file = os.path.join(
-                    audio_folder, filename.replace('.mp4', ".mp3"))
-                print(f"converting mp4 to mp3 {i}/{len(files)}, '{filename}'")
+                mp3_file = os.path.join(audio_folder, filename.replace(".mp4", ".mp3"))
+                print(f"    ->converting mp4 to mp3 {i}/{len(files)}, '{filename}'")
                 # print(
                 #     f"converting {i}/{len(files)}, '{filename}', path: {mp4_file}, new path: {mp3_file}")
 
@@ -75,13 +81,13 @@ def convert_mp3_to_wav(audio_folder, wav_folder):
     files = os.listdir(audio_folder)
 
     i = 1
+    print("Converting mp3 to wav")
     for filename in files:
         if filename.endswith(".mp3"):
             try:
                 mp3_file = os.path.join(audio_folder, filename)
-                wav_file = os.path.join(
-                    wav_folder, filename.replace('.mp3', ".wav"))
-                print(f"converting mp3 to wav {i}/{len(files)}, '{filename}'")
+                wav_file = os.path.join(wav_folder, filename.replace(".mp3", ".wav"))
+                print(f"    ->converting mp3 to wav {i}/{len(files)}, '{filename}'")
                 # print(
                 #     f"converting {i}/{len(files)}, '{filename}', path: {mp3_file}, new path: {wav_file}")
                 sound = AudioSegment.from_mp3(mp3_file)
@@ -99,27 +105,28 @@ def main():
     shutil.rmtree(audios_folder, ignore_errors=True)
     shutil.rmtree(wav_folder, ignore_errors=True)
     try:
-        os.mkdir(videos_folder)
+        os.makedirs(videos_folder)
     except:
         pass
     try:
-        os.mkdir(audios_folder)
+        os.makedirs(audios_folder)
     except:
         pass
     try:
-        os.mkdir(wav_folder)
+        os.makedirs(wav_folder)
     except:
         pass
 
-    # ! videos list
-    # videos_list = [
-    #     "https://youtu.be/5IWS7Y5KRhk?list=PLrvKqne9ixu2VC3MCxH6SsAABXQ-FzXi4"]
-    # download_list_videos(videos_list, videos_folder)
+    print("Python mp3 downloader. By Nicola Lovo https://github.com/NicolaLovo\n\n")
+    print("NOTE: the playlist must be public and not private.")
+    playlist_url = input("Insert the youtube playlist url to convert: ")
+    print(f"\nStart downloading playlist '{playlist_url}'")
 
-    # ! playlist
-    # playlist totale
-    # playlist_url = "https://www.youtube.com/playlist?list=PLrvKqne9ixu1FZTt6afGX3Q8-s0ol1fLs"
-    playlist_url = "https://www.youtube.com/playlist?list=PLrvKqne9ixu2VC3MCxH6SsAABXQ-FzXi4"  # video nuovi
+    # Nicola playlist
+    # video nuovi https://www.youtube.com/playlist?list=PLrvKqne9ixu2VC3MCxH6SsAABXQ-FzXi4
+    # playlist totale https://www.youtube.com/playlist?list=PLrvKqne9ixu1FZTt6afGX3Q8-s0ol1fLs
+    # video list ["https://youtu.be/5IWS7Y5KRhk?list=PLrvKqne9ixu2VC3MCxH6SsAABXQ-FzXi4"]
+
     download_playlist_videos(playlist_url, videos_folder)
 
     print("\n\n")
@@ -128,9 +135,11 @@ def main():
 
     print("\n\n")
 
-    # ! convert mp3 to wav: decomment if needed!!!
-    # convert_mp3_to_wav(audios_folder, wav_folder)
+    playlist_url = input("Do you also want to convert the mp3 files to wav? (y/n):")
+
+    if playlist_url.lower() == "y":
+        convert_mp3_to_wav(audios_folder, wav_folder)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
