@@ -14,7 +14,7 @@ Oppure, se quello sopra non funziona
 py -3 -m venv .venv
 ```
 
-
+# Avviare il 
 
 
 # Inizializzare il progetto
