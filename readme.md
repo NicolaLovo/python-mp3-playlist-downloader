@@ -1,3 +1,22 @@
+
+
+# Inizializzazione del progetto
+
+> Nota: da fare solo la prima volta che si apre il progetto
+
+```bash
+python -m venv .venv
+```
+
+Oppure, se quello sopra non funziona
+
+```bash
+py -3 -m venv .venv
+```
+
+
+
+
 # Inizializzare il progetto
 
 [fix permissions fow windows](https://stackoverflow.com/questions/4037939/powershell-says-execution-of-scripts-is-disabled-on-this-system)
