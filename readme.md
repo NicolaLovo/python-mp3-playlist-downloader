@@ -56,6 +56,12 @@ python main.py
 
 
 
+# Creare l'eseguibile
+
+```bash
+pyinstaller main.py --onefile
+```
+
 ## Mac
 
 aprire la cartella del programma nel terminale

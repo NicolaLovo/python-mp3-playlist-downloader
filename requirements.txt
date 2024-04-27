@@ -1,3 +1,5 @@
+altgraph==0.17.4
+autopep8==2.0.1
 certifi==2024.2.2
 charset-normalizer==3.3.2
 colorama==0.4.6
@@ -7,10 +9,17 @@ imageio==2.34.0
 imageio-ffmpeg==0.4.9
 moviepy==1.0.3
 numpy==1.26.4
+packaging==24.0
+pefile==2023.2.7
 pillow==10.2.0
 proglog==0.1.10
+pycodestyle==2.10.0
 pydub==0.25.1
+pyinstaller==6.6.0
+pyinstaller-hooks-contrib==2024.5
 pytube==15.0.0
+pywin32-ctypes==0.2.2
 requests==2.31.0
+tomli==2.0.1
 tqdm==4.66.2
 urllib3==2.2.1
