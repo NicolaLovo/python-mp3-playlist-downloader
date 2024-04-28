@@ -22,6 +22,13 @@ Oppure, se quello sopra non funziona
 py -3 -m venv .venv
 ```
 
+## Attivare l'ambiente
+
+```bash
+.venv\scripts\activate
+```
+
+
 ## Installare le librerie
 
 ```bash
