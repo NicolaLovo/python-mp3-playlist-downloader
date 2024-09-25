@@ -89,5 +89,10 @@ python3 main.py
 
 Fix for pytube: https://github.com/pytube/pytube/issues/1678#issuecomment-1609241125
 Modificare il file .venv/Lib/site-packages/pytube/cypher.py a linea 264
-
-
+```python
+    function_patterns = [
+    r'a\.[a-zA-Z]\s*&&\s*\([a-z]\s*=\s*a\.get\("n"\)\)\s*&&.*?\|\|\s*([a-z]+)',
+    r'\([a-z]\s*=\s*([a-zA-Z0-9$]+)(\[\d+\])?\([a-z]\)',
+    r'\([a-z]\s*=\s*([a-zA-Z0-9$]+)(\[\d+\])\([a-z]\)',
+]
+```
