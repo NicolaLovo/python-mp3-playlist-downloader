@@ -86,6 +86,8 @@ python3 main.py
 
 # Roba per sviluppatori
 
+Todo: find alternative to pytube since it is **no longer maintained**
+
 
 Fix for pytube: https://github.com/pytube/pytube/issues/1678#issuecomment-1609241125
 Modificare il file .venv/Lib/site-packages/pytube/cypher.py a linea 264
