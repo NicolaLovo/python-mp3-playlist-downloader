@@ -86,7 +86,10 @@ python3 main.py
 
 # Roba per sviluppatori
 
-Todo: find alternative to pytube since it is **no longer maintained**
+Todo: find alternative to pytube since it is **no longer maintained**.
+
+Example:
+- [pytubefix](https://github.com/JuanBindez/pytubefix)
 
 
 Fix for pytube: https://github.com/pytube/pytube/issues/1678#issuecomment-1609241125
