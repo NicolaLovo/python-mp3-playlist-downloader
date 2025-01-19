@@ -3,8 +3,8 @@ import shutil
 
 import moviepy.editor as mp
 from pydub import AudioSegment
-from pytube import Playlist, YouTube
-from pytube.cli import on_progress
+from pytubefix import Playlist, YouTube
+from pytubefix.cli import on_progress
 
 
 def parse_file_name(index, title):
