@@ -5,7 +5,7 @@
 
 ## Prerequisiti
 
-Scaricare e installare python
+Scaricare e installare **Python 3.12** (testato su **3.12.9**)
 > Verificare che python sia installato scrivendo sul terminale il comando `python`
 
 Scaricare e aggiungere alle variabili d'ambiente [ffmpeg](https://www.videohelp.com/software/ffmpeg)
