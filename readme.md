@@ -4,11 +4,19 @@
 
 ## Prerequisiti
 
+Scaricare e aggiungere alle variabili d'ambiente [ffmpeg](https://www.videohelp.com/software/ffmpeg)
+
 Scaricare e installare **Python 3.12** (testato su **3.12.9**)
 
-> Verificare che python sia installato scrivendo sul terminale il comando `python`
+> Verificare che python sia installato scrivendo sul terminale il comando `python --version`
 
-Scaricare e aggiungere alle variabili d'ambiente [ffmpeg](https://www.videohelp.com/software/ffmpeg)
+### Per Python > 3.12
+
+Installa le librerie mancanti per audioop:
+
+```bash
+pip install audioop-lts
+```
 
 ## Creare l'ambiente
 
@@ -77,12 +85,4 @@ source .venv/bin/activate
 
 ```bash
 python3 main.py
-```
-
-## For python > 3.12
-
-Install the missing dependencies:
-
-```bash
-pip install audioop-lts
 ```
