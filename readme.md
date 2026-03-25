@@ -78,3 +78,11 @@ source .venv/bin/activate
 ```bash
 python3 main.py
 ```
+
+## For python > 3.12
+
+Install the missing dependencies:
+
+```bash
+pip install audioop-lts
+```
