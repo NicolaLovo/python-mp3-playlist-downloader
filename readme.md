@@ -2,10 +2,10 @@
 
 > Nota: da fare solo la prima volta che si apre il progetto
 
-
 ## Prerequisiti
 
 Scaricare e installare **Python 3.12** (testato su **3.12.9**)
+
 > Verificare che python sia installato scrivendo sul terminale il comando `python`
 
 Scaricare e aggiungere alle variabili d'ambiente [ffmpeg](https://www.videohelp.com/software/ffmpeg)
@@ -28,7 +28,6 @@ py -3 -m venv .venv
 .venv\scripts\activate
 ```
 
-
 ## Installare le librerie
 
 ```bash
@@ -38,6 +37,7 @@ pip install -r requirements.txt
 # Avviare il programma
 
 Opzionale: abilitare i permessi [windows](https://stackoverflow.com/questions/4037939/powershell-says-execution-of-scripts-is-disabled-on-this-system)
+
 ```bash
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 ```
@@ -47,7 +47,6 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 ```bash
 .venv\scripts\activate
 ```
-
 
 ## Avviare il programma
 
@@ -60,8 +59,6 @@ python main.py
 - download/audio
 - download/videos
 - download/wav
-
-
 
 # Creare l'eseguibile
 
@@ -80,24 +77,4 @@ source .venv/bin/activate
 
 ```bash
 python3 main.py
-```
-
-
-
-# Roba per sviluppatori
-
-Todo: find alternative to pytube since it is **no longer maintained**.
-
-Example:
-- [pytubefix](https://github.com/JuanBindez/pytubefix)
-
-
-Fix for pytube: https://github.com/pytube/pytube/issues/1678#issuecomment-1609241125
-Modificare il file .venv/Lib/site-packages/pytube/cypher.py a linea 264
-```python
-function_patterns = [
-    r'a\.[a-zA-Z]\s*&&\s*\([a-z]\s*=\s*a\.get\("n"\)\)\s*&&.*?\|\|\s*([a-z]+)',
-    r'\([a-z]\s*=\s*([a-zA-Z0-9$]+)(\[\d+\])?\([a-z]\)',
-    r'\([a-z]\s*=\s*([a-zA-Z0-9$]+)(\[\d+\])\([a-z]\)',
-]
 ```

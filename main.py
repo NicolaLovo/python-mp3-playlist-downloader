@@ -1,58 +1,81 @@
 import os
 import shutil
 
-import moviepy.editor as mp
+import yt_dlp
 from pydub import AudioSegment
-from pytubefix import Playlist, YouTube
-from pytubefix.cli import on_progress
+from moviepy import AudioFileClip
 
 
-def parse_file_name(index, title):
-    name = f"{index}-{title}.mp4"
-    name = name.replace("|", "-").replace("/", "-").replace("\\", "-")
-    name = name.replace("'", "").replace('"', "")
-    name = name.replace(":", "-").replace("*", "-").replace("?", "-")
-    name = name.strip()
-    return name
+# def parse_file_name(index, title):
+#     name = f"{index}-{title}.mp4"
+#     name = name.replace("|", "-").replace("/", "-").replace("\\", "-")
+#     name = name.replace("'", "").replace('"', "")
+#     name = name.replace(":", "-").replace("*", "-").replace("?", "-")
+#     name = name.strip()
+#     return name
 
 
-def download_playlist_videos(play_list_url, folder):
-    playlist = Playlist(play_list_url)
-    i = 1
-    for url in playlist:
-        try:
-            yt = YouTube(
-                url,
-                on_progress_callback=on_progress,
-                use_oauth=True,
-                allow_oauth_cache=True,
-            )
-            video = yt.streams.filter(only_audio=True).first()
+def download_playlist_audio(playlist_url, output_folder):
+    print("Fetching playlist...")
 
-            name = parse_file_name(i, yt.title)
-            print(
-                f"  ->downloading {i}/{len(playlist)}, size {round(video.filesize/(1024*1024))}MB, inside {folder}, '{name}'"
-            )
-            video.download(folder, filename=name)
-            i += 1
-        except Exception as e:
-            print(f"Error downloading '{url}': {e}")
+    # ? Video + audio download and merge kept here for reference
+    # ydl_opts = {
+    #     # Download audio+video
+    #     # Some videos may not have mp4, so we use a fallback here for higher compatibility
+    #     "format": "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]/bv*+ba/best",
+    #     # "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
+
+    #     # Output filename
+    #     # https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#output-template
+    #     "outtmpl": os.path.join(
+    #         output_folder,
+    #         "%(playlist_index)s-%(title)s.%(ext)s"
+    #     ),
+
+    #     # Download playlist
+    #     "noplaylist": False,
+
+    #     "quiet": False,
+    #     "ignoreerrors": True,
+
+    #     # Force mp4 container
+    #     "postprocessors": [
+    #         {
+    #             "key": "FFmpegVideoRemuxer",
+    #             "preferedformat": "mp4",
+    #         }
+    #     ],
+    # }
 
 
-def download_list_videos(videos_urls, folder):
-    i = 1
-    for url in videos_urls:
-        try:
-            yt = YouTube(url, on_progress_callback=on_progress)
-            video = yt.streams.filter(only_audio=True).first()
-            print(
-                f"  ->downloading {i}/{len(videos_urls)}, size {round(video.filesize/(1024*1024))}MB, inside {folder}, '{yt.title}'"
-            )
-            name = parse_file_name(i, yt.title)
-            video.download(folder, filename=name)
-            i += 1
-        except Exception as e:
-            print(f"Error downloading '{url}': {e}")
+    # ? Audio-only download 
+    ydl_opts = {
+        # Download audio only
+        "format": "bestaudio[ext=m4a]/bestaudio/best",
+        # Output filename
+        "outtmpl": os.path.join(
+            output_folder,
+            "%(playlist_index)s-%(title)s.%(ext)s"
+        ),
+
+        # Download playlist
+        "noplaylist": False,
+
+        "quiet": False,
+        "ignoreerrors": True,
+
+        # Force mp4 container
+        "postprocessors": [
+            {
+                "key": "FFmpegVideoRemuxer",
+                "preferedformat": "mp4",
+            }
+        ],
+    }
+
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([playlist_url])
+
 
 
 def convert_videos_to_mp3(video_folder, audio_folder):
@@ -66,14 +89,14 @@ def convert_videos_to_mp3(video_folder, audio_folder):
                 mp4_file = os.path.join(video_folder, filename)
                 mp3_file = os.path.join(audio_folder, filename.replace(".mp4", ".mp3"))
                 print(f"    ->converting mp4 to mp3 {i}/{len(files)}, '{filename}'")
-                # print(
-                #     f"converting {i}/{len(files)}, '{filename}', path: {mp4_file}, new path: {mp3_file}")
+                print(
+                    f"converting {i}/{len(files)}, '{filename}', path: {mp4_file}, new path: {mp3_file}")
 
-                clip = mp.AudioFileClip(mp4_file)
+                clip = AudioFileClip(mp4_file)
                 clip.write_audiofile(mp3_file)
                 clip.close()
             except Exception as e:
-                print(f"Error converting mp4 to mp3 '{filename}': {e}")
+                print(f"Error converting mp4 to mp3 '{filename}'", e)
             i += 1
 
 
@@ -119,6 +142,7 @@ def main():
 
     print("Python mp3 downloader. By Nicola Lovo https://github.com/NicolaLovo\n\n")
     print("NOTE: the playlist must be public and not private.")
+    # playlist_url = "https://www.youtube.com/playlist?list=PLrvKqne9ixu2VC3MCxH6SsAABXQ-FzXi4"
     playlist_url = input("Insert the youtube playlist url to convert: ")
     print(f"\nStart downloading playlist '{playlist_url}'")
 
@@ -127,7 +151,7 @@ def main():
     # playlist totale https://www.youtube.com/playlist?list=PLrvKqne9ixu1FZTt6afGX3Q8-s0ol1fLs
     # video list ["https://youtu.be/5IWS7Y5KRhk?list=PLrvKqne9ixu2VC3MCxH6SsAABXQ-FzXi4"]
 
-    download_playlist_videos(playlist_url, videos_folder)
+    download_playlist_audio(playlist_url, videos_folder)
 
     print("\n\n")
     # ! convert videos to mp3
