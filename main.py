@@ -57,7 +57,16 @@ def download_playlist_audio(playlist_url, output_folder):
             output_folder,
             "%(playlist_index)s-%(title)s.%(ext)s"
         ),
-
+        "js_runtimes": {
+            "node": {}
+        },
+        "extractor_args": {
+            "youtube": {
+                # This tells yt-dlp to pretend it's an Android device or Mobile Web
+                "player_client": ["android", "mweb"] 
+            }
+        },
+        # "cookiesfrombrowser": ("chrome", ),
         # Download playlist
         "noplaylist": False,
 
